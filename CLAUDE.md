@@ -44,5 +44,5 @@ This repo is the shared memory for **Nearby Calls client onboarding and fulfillm
 - The cloud environment "NC Onboarding" injects the agency Private Integration key for `services.leadconnectorhq.com`. Don't set an `Authorization` header yourself.
 - Always send a `User-Agent` header (for example `nc-ops/1.0`) or Cloudflare blocks the request (error 1010). Also send `Version: 2021-07-28`.
 - The key starts **view-only**. Use it to look things up (find a client's sub-account, check A2P status, check workflows). If a task needs to create or change something through the API, say so and walk the person through the clicks in GHL instead, unless Jordan has widened the key and noted it in the playbook.
-- Agency-level calls that work with an agency key: `GET /locations/search?companyId=...`, `GET /locations/{id}`. Some sub-account data needs a sub-account token; if a call returns 401/403, fall back to clicks.
+- The agency key only covers agency-level things: sub-account list and details (`GET /locations/search?companyId=...`, `GET /locations/{id}`), snapshots, users. **Contacts, workflows, review settings, and texting (A2P) status live inside each sub-account**, so the agency key can't read them. For those, walk the person through the clicks in GHL. If a call returns 401/403, fall back to clicks.
 - Don't guess IDs, phone numbers, or settings. Look them up or ask.
